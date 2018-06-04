@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 public interface SearchService {
 
     @GET("search")
-    Call<SearchResultModel> getSearchResults(@Query("term") String searchTerm);
+    Call<SearchResultModel> getSearchResults(@Query("term") CharSequence searchTerm);
 }

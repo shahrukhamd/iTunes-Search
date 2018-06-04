@@ -13,15 +13,25 @@
         <item name="android:textColor">@android:color/black</item>
         <item name="android:alpha">0.54</item>
         <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:gravity">center</item>
     </style>
 
-    <style name="ListItemTitle" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/text_normal</item>
+    <style name="MusicTitle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/text_small</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:alpha">0.87</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">2</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+    </style>
+
+    <style name="MusicAuthor" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/text_minimum</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:alpha">0.87</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_margin">@dimen/margin_small</item>
     </style>

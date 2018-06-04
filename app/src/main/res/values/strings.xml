@@ -2,6 +2,7 @@
     <!--Common-->
     <string name="app_name">iTunes Search</string>
     <string name="message_some_error_occurred">Some error occurred</string>
+    <string name="message_network_error">Network error</string>
     <string name="dummy_text_small">sunt aut facere repellat provident occaecati excepturi optio reprehenderit</string>
     <string name="dummy_text_full">quia et suscipit recusandae consequuntur expedita et cum reprehenderit molestiae ut ut quas totam nostrum rerum est autem sunt rem eveniet architecto</string>
     <string name="message_nothing_to_show">Nothing to show.</string>
