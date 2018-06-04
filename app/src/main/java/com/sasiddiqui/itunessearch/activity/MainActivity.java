@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.sasiddiqui.itunessearch.R;
 import com.sasiddiqui.itunessearch.adapter.SearchResultRVAdapter;
+import com.sasiddiqui.itunessearch.network.ResultClickListener;
 import com.sasiddiqui.itunessearch.network.api.SearchService;
 import com.sasiddiqui.itunessearch.network.model.ResultModel;
 import com.sasiddiqui.itunessearch.network.model.SearchResultModel;
@@ -39,7 +40,8 @@ import timber.log.Timber;
  * Created by shahrukhamd on 04/06/18.
  */
 public class MainActivity extends AppCompatActivity implements
-        Callback<SearchResultModel> {
+        Callback<SearchResultModel>,
+        ResultClickListener {
 
     private static final int SEARCH_TIMEOUT_MILLI = 555;
     private static final int SPAN_COUNT_PORT = 3;
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements
                     @Override
                     public void onNext(CharSequence s) {
                         if (s.length() > 0) {
-                            searchService.getSearchResults(s).enqueue(MainActivity.this);
+                            searchService.getSearchResults(s, SearchService.ENTITY_TYPE_MUSIC_TRACK)
+                                    .enqueue(MainActivity.this);
                         }
                     }
 
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             layoutManager = new StaggeredGridLayoutManager( SPAN_COUNT_LAND, StaggeredGridLayoutManager.VERTICAL);
         }
-        searchResultRVAdapter = new SearchResultRVAdapter();
+        searchResultRVAdapter = new SearchResultRVAdapter(this);
         resultRecyclerView.setLayoutManager(layoutManager);
         resultRecyclerView.setAdapter(searchResultRVAdapter);
     }
@@ -138,4 +141,11 @@ public class MainActivity extends AppCompatActivity implements
         helpText.setVisibility(View.VISIBLE);
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onResultItemClick(ResultModel resultModel) {
+        Toast.makeText(this, String.format(getString(R.string.message_playing_track), resultModel.getTrackName()), Toast.LENGTH_SHORT).show();
+
+    }
+
 }
