@@ -1,9 +1,11 @@
 package com.sasiddiqui.itunessearch.activity;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -23,7 +25,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 import com.sasiddiqui.itunessearch.BuildConfig;
 import com.sasiddiqui.itunessearch.R;
 import com.sasiddiqui.itunessearch.adapter.SearchResultRVAdapter;
@@ -89,30 +90,13 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        if (Util.SDK_INT > 23) initExoPlayer();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if ((Util.SDK_INT <= 23 || player == null)) initExoPlayer();
-    }
-
-    /*Before API Level 24 there is no guarantee of onStop being called. So we have to release the
-      player as early as possible in onPause. Starting with API Level 24 onStop is guaranteed to be
-      called and in the paused mode our activity is eventually still visible. Hence we need to wait
-      releasing until onStop.*/
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (Util.SDK_INT <= 23) releasePlayer();
+        initExoPlayer();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) releasePlayer();
+        releasePlayer();
     }
 
     /**
@@ -220,19 +204,28 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onResultItemClick(ResultModel resultModel) {
         player.stop();  // Stop whatever is playing
-
-        if (!resultModel.isPlaying()) {
-            Toast.makeText(this, String.format(getString(R.string.message_playing_track), resultModel.getTrackName()), Toast.LENGTH_SHORT).show();
-            currentMediaUrl = resultModel.getPreviewUrl();
-            player.prepare(getMediaSource(), true, false);
-        }
-
-        resultModel.switchIsPlaying();
+        Toast.makeText(this, String.format(getString(R.string.message_playing_track), resultModel.getTrackName()), Toast.LENGTH_SHORT).show();
+        currentMediaUrl = resultModel.getPreviewUrl();
+        player.prepare(getMediaSource(), true, false);
+        showTrackInfoDialog(resultModel);
     }
 
     private MediaSource getMediaSource() {
         return new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(Uri.parse(currentMediaUrl));
+    }
+
+    private void showTrackInfoDialog(ResultModel resultModel) {
+        new AlertDialog.Builder(this)
+                .setTitle(resultModel.getTrackName())
+                .setMessage(resultModel.getArtistName())
+                .setPositiveButton(R.string.text_close, null)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        player.stop();
+                    }
+                }).show();
     }
 
     /**

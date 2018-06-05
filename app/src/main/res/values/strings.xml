@@ -11,5 +11,6 @@
     <!--Main screen-->
     <string name="search_hint">Search music here</string>
     <string name="message_playing_track">Playing %s</string>
+    <string name="text_close">Close</string>
     <!--Main screen-->
 </resources>
