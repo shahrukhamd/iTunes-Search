@@ -20,23 +20,23 @@
 
         <TextView
             android:id="@+id/music_item_title_text"
+            style="@style/MusicTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/music_item_image"
-            tools:text="@string/dummy_text_small"
-            style="@style/MusicTitle"/>
+            app:layout_constraintTop_toBottomOf="@id/music_item_image"
+            tools:text="@string/dummy_text_small" />
 
         <TextView
             android:id="@+id/music_item_author_text"
+            style="@style/MusicAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/music_item_title_text"
-            tools:text="@string/dummy_text_small"
-            style="@style/MusicAuthor" />
+            app:layout_constraintTop_toBottomOf="@id/music_item_title_text"
+            tools:text="@string/dummy_text_small" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

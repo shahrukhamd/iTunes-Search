@@ -111,6 +111,8 @@ public class ResultModel {
     @SerializedName("collectionArtistViewUrl")
     @Expose
     private String collectionArtistViewUrl;
+    @SerializedName("isPlaying")
+    private boolean isPlaying = false;
 
     public String getWrapperType() {
         return wrapperType;
@@ -384,4 +386,15 @@ public class ResultModel {
         this.collectionArtistViewUrl = collectionArtistViewUrl;
     }
 
+    public void switchIsPlaying() {
+        isPlaying = !isPlaying;
+    }
+
+    public void setIsPlaying(boolean isPlaying) {
+        this.isPlaying = isPlaying;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
 }
